@@ -1,4 +1,4 @@
-package com.gzlg.dto;
+package com.gzlg.pojo.dto;
 
 import lombok.Data;
 

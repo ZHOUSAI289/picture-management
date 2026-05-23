@@ -1,17 +1,17 @@
-package com.gzlg.vo;
+package com.gzlg.pojo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 图片视图对象VO
- * 用于返回给前端展示的图片信息
+ * 图片响应DTO
+ * 用于后端内部数据传递，返回图片的完整信息
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PhotoVO {
+public class PhotoResponseDTO {
     //图片id
     private Integer id;
     //图片名称
