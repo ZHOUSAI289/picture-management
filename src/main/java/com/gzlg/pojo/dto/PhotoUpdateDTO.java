@@ -10,12 +10,14 @@ import lombok.Data;
 public class PhotoUpdateDTO {
     //图片id（必填，用于定位要更新的图片）
     private Integer id;
-    //图片名称
-    private String name;
+    //图片标题
+    private String title;
     //图片描述
     private String description;
-    //图片分类
-    private String type;
-    //图片拍摄者
-    private String author;
+    //图库分类
+    private String category;
+    //拍摄者
+    private String photographer;
+    //拍摄日期（格式：YYYY-MM-DD）
+    private String date;
 }

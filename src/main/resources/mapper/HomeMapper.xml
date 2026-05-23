@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.gzlg.mapper.PhotoMapper">
+<mapper namespace="com.gzlg.mapper.HomeMapper">
 
     <!-- 结果映射 -->
-    <resultMap id="imageMap" type="com.gzlg.pojo.entity.image">
+    <resultMap id="imageMap" type="com.gzlg.pojo.vo.PhotoVO">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="category" column="category"/>
@@ -29,10 +29,10 @@
                 AND category = #{category}
             </if>
             <if test="startDate != null and startDate != ''">
-                AND date &gt; #{startDate}
+                AND date &gt;= #{startDate}
             </if>
             <if test="endDate != null and endDate != ''">
-                AND date &lt; #{endDate}
+                AND date &lt;= #{endDate}
             </if>
             <if test="status != null">
                 AND status = #{status}
@@ -55,10 +55,10 @@
                 AND category = #{category}
             </if>
             <if test="startDate != null and startDate != ''">
-                AND date &gt; #{startDate}
+                AND date &gt;= #{startDate}
             </if>
             <if test="endDate != null and endDate != ''">
-                AND date &lt; #{endDate}
+                AND date &lt;= #{endDate}
             </if>
             <if test="status != null">
                 AND status = #{status}

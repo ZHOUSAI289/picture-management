@@ -14,18 +14,18 @@ import lombok.NoArgsConstructor;
 public class PhotoResponseDTO {
     //图片id
     private Integer id;
-    //图片名称
-    private String name;
+    //图片标题
+    private String title;
     //图片路径（阿里云OSS地址）
     private String url;
     //图片大小
     private String size;
     //图片上传时间
-    private String time;
+    private String createdAt;
     //图片描述
     private String description;
-    //图片分类
-    private String type;
-    //图片拍摄者
-    private String author;
+    //图库分类
+    private String category;
+    //拍摄者
+    private String photographer;
 }

@@ -1,5 +1,6 @@
 package com.gzlg.pojo.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
@@ -9,6 +10,7 @@ import lombok.Data;
 @Data
 public class PhotoQueryDTO {
     //页码（默认第1页）
+    @JsonProperty("page")
     private Integer pageNum = 1;
     //每页数量（默认10条）
     private Integer pageSize = 10;

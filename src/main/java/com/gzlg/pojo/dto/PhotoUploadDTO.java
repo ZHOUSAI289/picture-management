@@ -4,20 +4,22 @@ import lombok.Data;
 
 /**
  * 图片上传请求DTO
- * 用于接收前端上传图片时提交的数据
+ * 用于接收前端上传图片时提交的 multipart/form-data 数据
  */
 @Data
 public class PhotoUploadDTO {
-    //图片名称
-    private String name;
+    //图片标题
+    private String title;
     //图片描述
     private String description;
-    //图片分类
-    private String type;
-    //图片拍摄者
-    private String author;
-    //图片URL（阿里云OSS存储地址）
-    private String url;
-    //图片大小
-    private String size;
+    //图库分类
+    private String category;
+    //拍摄者
+    private String photographer;
+    //拍摄日期（格式：YYYY-MM-DD）
+    private String date;
+    //是否启用自定义分类（默认false）
+    private Boolean enableCustomCategory;
+    //自定义分类名称（当enableCustomCategory为true时必填）
+    private String customCategory;
 }

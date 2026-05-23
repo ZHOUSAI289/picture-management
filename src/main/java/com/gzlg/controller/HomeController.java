@@ -2,15 +2,14 @@ package com.gzlg.controller;
 
 import com.gzlg.pojo.Result;
 import com.gzlg.pojo.dto.PhotoQueryDTO;
+import com.gzlg.pojo.vo.PageResult;
 import com.gzlg.pojo.vo.PhotoVO;
-import com.gzlg.service.PhotoService;
+import com.gzlg.service.HomeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * 首页控制器
@@ -21,15 +20,15 @@ import java.util.List;
 public class HomeController {
 
     @Autowired
-    private PhotoService photoService;
+    private HomeService homeService;
     /**
-     * 获取图片列表
+     * 获取图片列表（分页）
      * @param photoQueryDTO 图片查询参数
-     * @return 图片列表
+     * @return 分页结果
      */
     @GetMapping
-    public Result<List<PhotoVO>> getImageList(PhotoQueryDTO photoQueryDTO){
-        List<PhotoVO> list = photoService.getImageList(photoQueryDTO);
-        return Result.success(list);
+    public Result<PageResult<PhotoVO>> getImageList(PhotoQueryDTO photoQueryDTO){
+        PageResult<PhotoVO> pageResult = homeService.getImageList(photoQueryDTO);
+        return Result.success(pageResult);
     }
 }
