@@ -8,14 +8,27 @@ import lombok.Data;
  */
 @Data
 public class PhotoQueryDTO {
-    //图片分类（精确匹配）
-    private String type;
-    //图片拍摄者（模糊匹配）
-    private String author;
-    //关键词（搜索图片名称和描述）
-    private String keyword;
     //页码（默认第1页）
     private Integer pageNum = 1;
     //每页数量（默认10条）
     private Integer pageSize = 10;
+    //标题关键词搜索
+    private String title;
+    //图库分类筛选
+    private String category;
+    //开始日期
+    private String startDate;
+    //结束日期
+    private String endDate;
+    //状态筛选（0-待审核，1-审核通过，2-审核不通过，3-已发布）
+    private Integer status;
+    //页码偏移量（计算后使用）
+    private Integer offset;
+
+    //计算分页偏移量
+    public void calculateOffset() {
+        if (pageNum == null) pageNum = 1;
+        if (pageSize == null) pageSize = 10;
+        this.offset = (pageNum - 1) * pageSize;
+    }
 }

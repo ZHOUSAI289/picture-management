@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gzlg.mapper.PhotoMapper">
+
+    <!-- 结果映射 -->
+    <resultMap id="imageMap" type="com.gzlg.pojo.entity.image">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="category" column="category"/>
+        <result property="photographer" column="photographer"/>
+        <result property="date" column="date"/>
+        <result property="url" column="url"/>
+        <result property="description" column="description"/>
+        <result property="status" column="status"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <!-- 根据条件查询图片列表 -->
+    <select id="findByCondition" parameterType="com.gzlg.pojo.dto.PhotoQueryDTO" resultMap="imageMap">
+        SELECT * FROM image
+        <where>
+            <if test="title != null and title != ''">
+                AND title LIKE CONCAT('%', #{title}, '%')
+            </if>
+            <if test="category != null and category != ''">
+                AND category = #{category}
+            </if>
+            <if test="startDate != null and startDate != ''">
+                AND date &gt; #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                AND date &lt; #{endDate}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+        </where>
+        ORDER BY created_at DESC
+        <if test="pageNum != null and pageSize != null">
+            LIMIT #{offset}, #{pageSize}
+        </if>
+    </select>
+
+    <!-- 查询图片总数 -->
+    <select id="countByCondition" parameterType="com.gzlg.pojo.dto.PhotoQueryDTO" resultType="int">
+        SELECT COUNT(*) FROM image
+        <where>
+            <if test="title != null and title != ''">
+                AND title LIKE CONCAT('%', #{title}, '%')
+            </if>
+            <if test="category != null and category != ''">
+                AND category = #{category}
+            </if>
+            <if test="startDate != null and startDate != ''">
+                AND date &gt; #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                AND date &lt; #{endDate}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+        </where>
+    </select>
+
+</mapper>
