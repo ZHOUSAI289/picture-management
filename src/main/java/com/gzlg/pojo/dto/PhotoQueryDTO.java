@@ -26,6 +26,10 @@ public class PhotoQueryDTO {
     private Integer status;
     //状态筛选（字符串形式：pending/approved/rejected/published）
     private String statusStr;
+    //排序字段（date / created_at）
+    private String sortField;
+    //排序方向（ASC / DESC）
+    private String sortOrder;
     //页码偏移量（计算后使用）
     private Integer offset;
 

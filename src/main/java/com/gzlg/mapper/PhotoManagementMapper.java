@@ -69,4 +69,14 @@ public interface PhotoManagementMapper {
      * 批量更新图片状态
      */
     void batchUpdateStatus(@Param("ids") List<Integer> ids, @Param("status") Integer status);
+
+    /**
+     * 查询草稿
+     */
+    PhotoVO findDraft();
+
+    /**
+     * 删除所有草稿
+     */
+    void deleteDrafts();
 }

@@ -3,8 +3,9 @@ package com.gzlg.controller;
 import com.gzlg.pojo.Result;
 import com.gzlg.pojo.dto.BatchAuditDTO;
 import com.gzlg.pojo.dto.BatchCategoryDTO;
-import com.gzlg.service.CategoryService;
-import com.gzlg.service.PhotoManagementService;
+import com.gzlg.pojo.vo.PageResult;
+import com.gzlg.pojo.vo.PhotoVO;
+import com.gzlg.service.AuditService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,25 +22,45 @@ import java.util.Map;
 public class AuditController {
 
     @Autowired
-    private PhotoManagementService photoManagementService;
-
-    @Autowired
-    private CategoryService categoryService;
+    private AuditService auditService;
 
     /**
-     * 3.3.3 批量审核图片
+     * 获取待审核列表
+     * GET /api/images/audit
+     */
+    @GetMapping("/audit")
+    public Result<PageResult<PhotoVO>> getAuditList(
+            @RequestParam(defaultValue = "1") Integer page,
+            @RequestParam(defaultValue = "10") Integer pageSize,
+            @RequestParam(required = false) Integer status) {
+        return Result.success(auditService.getAuditList(page, pageSize, status));
+    }
+
+    /**
+     * 审核单张图片
+     * PUT /api/images/{id}/audit
+     */
+    @PutMapping("/{id}/audit")
+    public Result<PhotoVO> auditImage(
+            @PathVariable Integer id,
+            @RequestBody Map<String, String> body) {
+        String status = body.get("status");
+        return Result.success(auditService.auditImage(id, status));
+    }
+
+    /**
+     * 批量审核
      * PUT /api/images/audit/batch
      */
     @PutMapping("/audit/batch")
-    public Result<Map<String, Object>> batchAuditImages(@RequestBody BatchAuditDTO dto) {
-        log.info("批量审核图片，数量: {}, 结果: {}", dto.getIds().size(), dto.getStatus());
+    public Result<Map<String, Object>> batchAudit(@RequestBody BatchAuditDTO dto) {
         if (dto.getIds() == null || dto.getIds().isEmpty()) {
             return Result.error("请选择要审核的图片");
         }
         if (dto.getStatus() == null || dto.getStatus().isEmpty()) {
             return Result.error("请选择审核结果");
         }
-        photoManagementService.batchAuditImages(dto.getIds(), dto.getStatus());
+        auditService.batchAuditImages(dto.getIds(), dto.getStatus());
         Map<String, Object> result = new HashMap<>();
         result.put("successCount", dto.getIds().size());
         result.put("failedCount", 0);
@@ -47,19 +68,18 @@ public class AuditController {
     }
 
     /**
-     * 3.3.4 批量分类图片
+     * 批量分类
      * PUT /api/images/category/batch
      */
     @PutMapping("/category/batch")
-    public Result<Map<String, Object>> batchCategoryImages(@RequestBody BatchCategoryDTO dto) {
-        log.info("批量分类图片，数量: {}, 分类: {}", dto.getIds().size(), dto.getCategory());
+    public Result<Map<String, Object>> batchCategory(@RequestBody BatchCategoryDTO dto) {
         if (dto.getIds() == null || dto.getIds().isEmpty()) {
             return Result.error("请选择要分类的图片");
         }
         if (dto.getCategory() == null || dto.getCategory().isEmpty()) {
             return Result.error("请选择分类");
         }
-        categoryService.batchUpdateCategory(dto.getIds(), dto.getCategory());
+        auditService.batchUpdateCategory(dto.getIds(), dto.getCategory());
         Map<String, Object> result = new HashMap<>();
         result.put("successCount", dto.getIds().size());
         result.put("failedCount", 0);

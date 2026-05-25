@@ -60,7 +60,23 @@
                 END = #{statusStr}
             </if>
         </where>
-        ORDER BY created_at DESC
+        <choose>
+            <when test="sortField == 'date' and sortOrder == 'DESC'">
+                ORDER BY date DESC
+            </when>
+            <when test="sortField == 'date' and sortOrder == 'ASC'">
+                ORDER BY date ASC
+            </when>
+            <when test="sortField == 'created_at' and sortOrder == 'DESC'">
+                ORDER BY created_at DESC
+            </when>
+            <when test="sortField == 'created_at' and sortOrder == 'ASC'">
+                ORDER BY created_at ASC
+            </when>
+            <otherwise>
+                ORDER BY created_at DESC
+            </otherwise>
+        </choose>
         <if test="pageNum != null and pageSize != null">
             LIMIT #{offset}, #{pageSize}
         </if>
@@ -146,6 +162,23 @@
             updated_at = NOW()
         WHERE id = #{id}
     </update>
+
+    <!-- 查询草稿（status=4） -->
+    <select id="findDraft" resultMap="imageMap">
+        SELECT
+            id, title, category, photographer, date, url, description, status,
+            created_at, updated_at,
+            <include refid="statusCase"/>
+        FROM image
+        WHERE status = 4
+        ORDER BY updated_at DESC
+        LIMIT 1
+    </select>
+
+    <!-- 删除所有草稿 -->
+    <delete id="deleteDrafts">
+        DELETE FROM image WHERE status = 4
+    </delete>
 
     <!-- 批量更新图片状态 -->
     <update id="batchUpdateStatus">
