@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gzlg.mapper.PhotoManagementMapper">
+
+    <resultMap id="imageMap" type="com.gzlg.pojo.vo.PhotoVO">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="category" column="category"/>
+        <result property="photographer" column="photographer"/>
+        <result property="date" column="date"/>
+        <result property="url" column="url"/>
+        <result property="description" column="description"/>
+        <result property="status" column="status_str"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+    
+    <!-- 状态转换 SQL 片段 -->
+    <sql id="statusCase">
+        CASE status
+            WHEN 0 THEN 'pending'
+            WHEN 1 THEN 'approved'
+            WHEN 2 THEN 'rejected'
+            WHEN 3 THEN 'published'
+            ELSE 'pending'
+        END AS status_str
+    </sql>
+
+    <select id="findByCondition" parameterType="com.gzlg.pojo.dto.PhotoQueryDTO" resultMap="imageMap">
+        SELECT 
+            id, title, category, photographer, date, url, description, status,
+            created_at, updated_at,
+            <include refid="statusCase"/>
+        FROM image
+        <where>
+            <if test="title != null and title != ''">
+                AND title LIKE CONCAT('%', #{title}, '%')
+            </if>
+            <if test="category != null and category != ''">
+                AND category = #{category}
+            </if>
+            <if test="startDate != null and startDate != ''">
+                AND date &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                AND date &lt;= #{endDate}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+            <if test="statusStr != null and statusStr != ''">
+                AND CASE status
+                    WHEN 0 THEN 'pending'
+                    WHEN 1 THEN 'approved'
+                    WHEN 2 THEN 'rejected'
+                    WHEN 3 THEN 'published'
+                    ELSE 'pending'
+                END = #{statusStr}
+            </if>
+        </where>
+        ORDER BY created_at DESC
+        <if test="pageNum != null and pageSize != null">
+            LIMIT #{offset}, #{pageSize}
+        </if>
+    </select>
+
+    <select id="countByCondition" parameterType="com.gzlg.pojo.dto.PhotoQueryDTO" resultType="int">
+        SELECT COUNT(*) FROM image
+        <where>
+            <if test="title != null and title != ''">
+                AND title LIKE CONCAT('%', #{title}, '%')
+            </if>
+            <if test="category != null and category != ''">
+                AND category = #{category}
+            </if>
+            <if test="startDate != null and startDate != ''">
+                AND date &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and endDate != ''">
+                AND date &lt;= #{endDate}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+            <if test="statusStr != null and statusStr != ''">
+                AND CASE status
+                    WHEN 0 THEN 'pending'
+                    WHEN 1 THEN 'approved'
+                    WHEN 2 THEN 'rejected'
+                    WHEN 3 THEN 'published'
+                    ELSE 'pending'
+                END = #{statusStr}
+            </if>
+        </where>
+    </select>
+
+    <select id="findById" parameterType="int" resultMap="imageMap">
+        SELECT 
+            id, title, category, photographer, date, url, description, status,
+            created_at, updated_at,
+            <include refid="statusCase"/>
+        FROM image WHERE id = #{id}
+    </select>
+    
+    <!-- 根据分类名称查询图片列表 -->
+    <select id="findByCategory" parameterType="string" resultMap="imageMap">
+        SELECT 
+            id, title, category, photographer, date, url, description, status,
+            created_at, updated_at,
+            <include refid="statusCase"/>
+        FROM image 
+        WHERE category = #{categoryName}
+        ORDER BY created_at DESC
+    </select>
+
+    <insert id="insert" parameterType="com.gzlg.pojo.entity.image" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO image (title, category, photographer, date, url, description, status, created_at, updated_at)
+        VALUES (#{title}, #{category}, #{photographer}, #{date}, #{url}, #{description}, #{status}, #{createdAt}, #{updatedAt})
+    </insert>
+
+    <update id="update" parameterType="com.gzlg.pojo.entity.image">
+        UPDATE image
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="category != null">category = #{category},</if>
+            <if test="photographer != null">photographer = #{photographer},</if>
+            <if test="date != null">date = #{date},</if>
+            <if test="url != null">url = #{url},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="status != null">status = #{status},</if>
+            updated_at = #{updatedAt}
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM image WHERE id = #{id}
+    </delete>
+    
+    <!-- 更新单张图片状态 -->
+    <update id="updateStatus">
+        UPDATE image
+        SET status = #{status},
+            updated_at = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <!-- 批量更新图片状态 -->
+    <update id="batchUpdateStatus">
+        UPDATE image
+        SET status = #{status},
+            updated_at = NOW()
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+</mapper>

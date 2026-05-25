@@ -70,13 +70,6 @@
             <version>3.0.3</version>
         </dependency>
 
-        <!--分页插件PageHelper-->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.4.7</version>
-        </dependency>
-
         <!-- 阿里云 OSS SDK -->
         <dependency>
             <groupId>com.aliyun.oss</groupId>

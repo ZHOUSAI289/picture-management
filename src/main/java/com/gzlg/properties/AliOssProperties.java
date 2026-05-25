@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * 阿里云OSS配置属性
  */
 @Component
-@ConfigurationProperties(prefix = "alioss.oss")
+@ConfigurationProperties(prefix = "aliyun.oss")
 @Data
 public class AliOssProperties {
 

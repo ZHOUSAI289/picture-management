@@ -4,22 +4,28 @@ import lombok.Data;
 
 /**
  * 图片上传请求DTO
- * 用于接收前端上传图片时提交的 multipart/form-data 数据
  */
 @Data
 public class PhotoUploadDTO {
-    //图片标题
+
+    /** 图片标题（必填） */
     private String title;
-    //图片描述
+
+    /** 图片描述（必填） */
     private String description;
-    //图库分类
+
+    /** 图库分类（必填） */
     private String category;
-    //拍摄者
+
+    /** 拍摄者（必填） */
     private String photographer;
-    //拍摄日期（格式：YYYY-MM-DD）
+
+    /** 拍摄日期，格式：YYYY-MM-DD（必填） */
     private String date;
-    //是否启用自定义分类（默认false）
+
+    /** 是否启用自定义分类 */
     private Boolean enableCustomCategory;
-    //自定义分类名称（当enableCustomCategory为true时必填）
+
+    /** 自定义分类名称（enableCustomCategory为true时必填） */
     private String customCategory;
 }

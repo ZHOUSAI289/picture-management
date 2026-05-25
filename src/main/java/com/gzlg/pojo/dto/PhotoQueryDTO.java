@@ -24,6 +24,8 @@ public class PhotoQueryDTO {
     private String endDate;
     //状态筛选（0-待审核，1-审核通过，2-审核不通过，3-已发布）
     private Integer status;
+    //状态筛选（字符串形式：pending/approved/rejected/published）
+    private String statusStr;
     //页码偏移量（计算后使用）
     private Integer offset;
 

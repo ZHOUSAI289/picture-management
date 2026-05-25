@@ -20,4 +20,6 @@ public class PhotoUpdateDTO {
     private String photographer;
     //拍摄日期（格式：YYYY-MM-DD）
     private String date;
+    //审核状态（0-待审核，1-已通过，2-已拒绝）
+    private Integer status;
 }
