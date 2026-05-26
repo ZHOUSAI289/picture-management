@@ -3,6 +3,7 @@ package com.gzlg.mapper;
 import com.gzlg.pojo.dto.PhotoQueryDTO;
 import com.gzlg.pojo.entity.image;
 import com.gzlg.pojo.vo.PhotoVO;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -44,6 +45,7 @@ public interface PhotoManagementMapper {
      * 根据ID删除图片
      * @param id 图片ID
      */
+    @Delete("delete from photo where id = #{id}")
     void deleteById(Integer id);
 
     /**
@@ -56,12 +58,12 @@ public interface PhotoManagementMapper {
     /**
      * 更新单张图片状态
      */
-    void updateStatus(@Param("id") Integer id, @Param("status") Integer status);
+    void updateStatus(@Param("id") Integer id, @Param("status") String status);
 
     /**
      * 批量更新图片状态(用于批量审核)
      */
-    void batchUpdateStatus(@Param("ids") List<Integer> ids, @Param("status") Integer status);
+    void batchUpdateStatus(@Param("ids") List<Integer> ids, @Param("status") String status);
 
     /**
      * 查询草稿
@@ -71,5 +73,6 @@ public interface PhotoManagementMapper {
     /**
      * 删除所有草稿
      */
+    @Delete("DELETE FROM image WHERE status = 'draft'")
     void deleteDrafts();
 }

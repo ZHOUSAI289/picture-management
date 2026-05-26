@@ -98,7 +98,7 @@ public class UploadServiceImpl implements UploadService {
         image.setDate(date);
         image.setUrl(url);
         image.setDescription(uploadDTO.getDescription());
-        image.setStatus(0); // 待审核
+        image.setStatus("pending");
         image.setCreatedAt(LocalDateTime.now());
         image.setUpdatedAt(LocalDateTime.now());
 
@@ -130,7 +130,7 @@ public class UploadServiceImpl implements UploadService {
         image.setDate(date);
         image.setUrl("");
         image.setDescription(dto.getDescription() != null ? dto.getDescription() : "");
-        image.setStatus(4); // 草稿
+        image.setStatus("draft");
         image.setCreatedAt(LocalDateTime.now());
         image.setUpdatedAt(LocalDateTime.now());
 
@@ -215,25 +215,10 @@ public class UploadServiceImpl implements UploadService {
         vo.setDate(image.getDate() != null ? image.getDate().toString() : null);
         vo.setUrl(image.getUrl());
         vo.setDescription(image.getDescription());
-        vo.setStatus(convertStatusToString(image.getStatus()));
+        vo.setStatus(image.getStatus());
         vo.setCreatedAt(image.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         vo.setUpdatedAt(image.getUpdatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         return vo;
     }
 
-    /**
-     * 状态转换为字符串
-     * @param status
-     * @return
-     */
-    private String convertStatusToString(Integer status) {
-        if (status == null) return "pending";
-        switch (status) {
-            case 0: return "pending";
-            case 1: return "approved";
-            case 2: return "rejected";
-            case 3: return "published";
-            default: return "pending";
-        }
-    }
 }

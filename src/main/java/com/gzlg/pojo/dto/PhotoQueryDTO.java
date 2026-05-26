@@ -15,8 +15,8 @@ public class PhotoQueryDTO {
     private String startDate;
     //结束日期
     private String endDate;
-    //状态筛选（pending/approved/rejected/published）
-    private String statusStr;
+    //状态筛选（pending/approved/rejected/published/draft）
+    private String status;
     //排序字段（date / created_at）
     private String sortField;
     //排序方向（ASC / DESC）

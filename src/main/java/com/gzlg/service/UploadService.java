@@ -20,7 +20,7 @@ public interface UploadService {
     String uploadFile(MultipartFile file);
 
     /**
-     * 保存草稿（status=4）
+     * 保存草稿（status='draft'）
      */
     PhotoVO saveDraft(PhotoUploadDTO dto);
 

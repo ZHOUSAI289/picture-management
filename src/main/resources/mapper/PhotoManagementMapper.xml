@@ -12,28 +12,15 @@
         <result property="date" column="date"/>
         <result property="url" column="url"/>
         <result property="description" column="description"/>
-        <result property="status" column="status_str"/>
+        <result property="status" column="status"/>
         <result property="createdAt" column="created_at"/>
         <result property="updatedAt" column="updated_at"/>
     </resultMap>
     
-    <!-- 状态转换 SQL 片段 -->
-    <sql id="statusCase">
-        CASE status
-            WHEN 0 THEN 'pending'
-            WHEN 1 THEN 'approved'
-            WHEN 2 THEN 'rejected'
-            WHEN 3 THEN 'published'
-            WHEN 4 THEN 'draft'
-            ELSE 'unknown'
-        END AS status_str
-    </sql>
-
     <select id="findByCondition" parameterType="com.gzlg.pojo.dto.PhotoQueryDTO" resultMap="imageMap">
-        SELECT 
+        SELECT
             id, title, category, photographer, date, url, description, status,
-            created_at, updated_at,
-            <include refid="statusCase"/>
+            created_at, updated_at
         FROM image
         <where>
             <if test="title != null and title != ''">
@@ -48,15 +35,8 @@
             <if test="endDate != null and endDate != ''">
                 AND date &lt;= #{endDate}
             </if>
-            <if test="statusStr != null and statusStr != ''">
-                AND CASE status
-                    WHEN 0 THEN 'pending'
-                    WHEN 1 THEN 'approved'
-                    WHEN 2 THEN 'rejected'
-                    WHEN 3 THEN 'published'
-                    WHEN 4 THEN 'draft'
-                    ELSE 'unknown'
-                END = #{statusStr}
+            <if test="status != null and status != ''">
+                AND status = #{status}
             </if>
         </where>
         <choose>
@@ -93,33 +73,24 @@
             <if test="endDate != null and endDate != ''">
                 AND date &lt;= #{endDate}
             </if>
-            <if test="statusStr != null and statusStr != ''">
-                AND CASE status
-                    WHEN 0 THEN 'pending'
-                    WHEN 1 THEN 'approved'
-                    WHEN 2 THEN 'rejected'
-                    WHEN 3 THEN 'published'
-                    WHEN 4 THEN 'draft'
-                    ELSE 'unknown'
-                END = #{statusStr}
+            <if test="status != null and status != ''">
+                AND status = #{status}
             </if>
         </where>
     </select>
 
     <select id="findById" parameterType="int" resultMap="imageMap">
-        SELECT 
+        SELECT
             id, title, category, photographer, date, url, description, status,
-            created_at, updated_at,
-            <include refid="statusCase"/>
+            created_at, updated_at
         FROM image WHERE id = #{id}
     </select>
     
     <!-- 根据分类名称查询图片列表 -->
     <select id="findByCategory" parameterType="string" resultMap="imageMap">
-        SELECT 
+        SELECT
             id, title, category, photographer, date, url, description, status,
-            created_at, updated_at,
-            <include refid="statusCase"/>
+            created_at, updated_at
         FROM image 
         WHERE category = #{categoryName}
         ORDER BY created_at DESC
@@ -146,10 +117,6 @@
         </set>
         WHERE id = #{id}
     </update>
-
-    <delete id="deleteById" parameterType="int">
-        DELETE FROM image WHERE id = #{id}
-    </delete>
     
     <!-- 更新单张图片状态 -->
     <update id="updateStatus">
@@ -159,22 +126,18 @@
         WHERE id = #{id}
     </update>
 
-    <!-- 查询草稿（status=4） -->
+    <!-- 查询草稿 -->
     <select id="findDraft" resultMap="imageMap">
         SELECT
             id, title, category, photographer, date, url, description, status,
-            created_at, updated_at,
-            <include refid="statusCase"/>
+            created_at, updated_at
         FROM image
-        WHERE status = 4
+        WHERE status = 'draft'
         ORDER BY updated_at DESC
         LIMIT 1
     </select>
 
-    <!-- 删除所有草稿 -->
-    <delete id="deleteDrafts">
-        DELETE FROM image WHERE status = 4
-    </delete>
+
 
     <!-- 批量更新图片状态 -->
     <update id="batchUpdateStatus">

@@ -24,13 +24,17 @@ public class ImageServiceImpl implements ImageService {
     @Autowired
     private PhotoManagementMapper photoManagementMapper;
 
-    @Override
+    /**
+     * 获取图片列表
+     * @param queryDTO
+     * @return
+     */
     public List<PhotoVO> getImageList(PhotoQueryDTO queryDTO) {
         return photoManagementMapper.findByCondition(queryDTO);
     }
 
     /**
-     * 更新图片
+     * 获取图片详情
      * @param id
      * @return
      */

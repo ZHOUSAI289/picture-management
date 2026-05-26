@@ -31,8 +31,8 @@ public class image {
     // 图片简介
     private String description;
 
-    // 状态：0-待审核，1-审核通过，2-审核不通过，3-已发布
-    private Integer status;
+    // 状态：pending/approved/rejected/published/draft
+    private String status;
 
     // 创建时间（自动填充）
     private LocalDateTime createdAt;

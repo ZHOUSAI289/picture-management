@@ -30,7 +30,7 @@ public class AuditServiceImpl implements AuditService {
      */
     public List<PhotoVO> getAuditList() {
         PhotoQueryDTO queryDTO = new PhotoQueryDTO();
-        queryDTO.setStatusStr("pending");
+        queryDTO.setStatus("pending");
         return photoManagementMapper.findByCondition(queryDTO);
     }
 
@@ -45,8 +45,7 @@ public class AuditServiceImpl implements AuditService {
         if (existing == null) {
             throw new RuntimeException("图片不存在");
         }
-        Integer statusCode = convertStatusToCode(status);
-        photoManagementMapper.updateStatus(id, statusCode);
+        photoManagementMapper.updateStatus(id, status);
         return photoManagementMapper.findById(id);
     }
 
@@ -56,8 +55,7 @@ public class AuditServiceImpl implements AuditService {
      * @param status
      */
     public void batchAuditImages(List<Integer> ids, String status) {
-        Integer statusCode = convertStatusToCode(status);
-        photoManagementMapper.batchUpdateStatus(ids, statusCode);
+        photoManagementMapper.batchUpdateStatus(ids, status);
     }
 
     /**
@@ -69,16 +67,4 @@ public class AuditServiceImpl implements AuditService {
         categoryMapper.batchUpdateCategory(ids, category);
     }
 
-    /**
-     * 状态值转换成代码
-     * @param status
-     * @return
-     */
-    private Integer convertStatusToCode(String status) {
-        switch (status.toLowerCase()) {
-            case "approved": return 1;
-            case "rejected": return 2;
-            default: throw new RuntimeException("无效的状态值: " + status);
-        }
-    }
 }

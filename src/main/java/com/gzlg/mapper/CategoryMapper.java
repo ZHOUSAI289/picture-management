@@ -67,7 +67,7 @@ public interface CategoryMapper {
     /**
      * 批量审核图片
      * @param ids 图片ID列表
-     * @param status 状态（0-待审核，1-审核通过，2-审核不通过，3-已发布）
+     * @param status 状态（pending/approved/rejected/published/draft）
      */
-    void batchUpdateStatus(@Param("ids") List<Integer> ids, @Param("status") Integer status);
+    void batchUpdateStatus(@Param("ids") List<Integer> ids, @Param("status") String status);
 }
