@@ -24,7 +24,8 @@
             WHEN 1 THEN 'approved'
             WHEN 2 THEN 'rejected'
             WHEN 3 THEN 'published'
-            ELSE 'pending'
+            WHEN 4 THEN 'draft'
+            ELSE 'unknown'
         END AS status_str
     </sql>
 
@@ -53,7 +54,8 @@
                     WHEN 1 THEN 'approved'
                     WHEN 2 THEN 'rejected'
                     WHEN 3 THEN 'published'
-                    ELSE 'pending'
+                    WHEN 4 THEN 'draft'
+                    ELSE 'unknown'
                 END = #{statusStr}
             </if>
         </where>
@@ -97,7 +99,8 @@
                     WHEN 1 THEN 'approved'
                     WHEN 2 THEN 'rejected'
                     WHEN 3 THEN 'published'
-                    ELSE 'pending'
+                    WHEN 4 THEN 'draft'
+                    ELSE 'unknown'
                 END = #{statusStr}
             </if>
         </where>
