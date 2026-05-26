@@ -21,8 +21,10 @@ public class UploadController {
     private UploadService uploadService;
 
     /**
-     * 上传图片（含元数据，保存数据库，进入待审核）
-     * POST /api/images/upload
+     * 上传图片
+     * @param uploadDTO
+     * @param imageFile
+     * @return
      */
     @PostMapping("/upload")
     public Result<PhotoVO> uploadImage(
@@ -33,8 +35,9 @@ public class UploadController {
     }
 
     /**
-     * 通用文件上传（仅上传OSS，返回URL）
-     * POST /api/images/upload/file
+     * 文件上传
+     * @param file
+     * @return
      */
     @PostMapping("/upload/file")
     public Result<String> uploadFile(@RequestParam("file") MultipartFile file) {
@@ -44,11 +47,12 @@ public class UploadController {
 
     /**
      * 保存草稿
-     * POST /api/images/draft
+     * @param photoUploadDTO
+     * @return
      */
     @PostMapping("/draft")
-    public Result<PhotoVO> saveDraft(@RequestBody PhotoUploadDTO dto) {
-        return Result.success(uploadService.saveDraft(dto));
+    public Result<PhotoVO> saveDraft(@RequestBody PhotoUploadDTO photoUploadDTO) {
+        return Result.success(uploadService.saveDraft(photoUploadDTO));
     }
 
     /**
@@ -67,6 +71,6 @@ public class UploadController {
     @DeleteMapping("/draft")
     public Result<Void> deleteDraft() {
         uploadService.deleteDraft();
-        return Result.success(null);
+        return Result.success();
     }
 }
