@@ -4,7 +4,6 @@ import com.gzlg.mapper.PhotoManagementMapper;
 import com.gzlg.pojo.dto.PhotoQueryDTO;
 import com.gzlg.pojo.dto.PhotoUpdateDTO;
 import com.gzlg.pojo.entity.image;
-import com.gzlg.pojo.vo.PageResult;
 import com.gzlg.pojo.vo.PhotoVO;
 import com.gzlg.service.ImageService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,19 +25,25 @@ public class ImageServiceImpl implements ImageService {
     private PhotoManagementMapper photoManagementMapper;
 
     @Override
-    public PageResult<PhotoVO> getImageList(PhotoQueryDTO queryDTO) {
-        queryDTO.calculateOffset();
-        Long total = (long) photoManagementMapper.countByCondition(queryDTO);
-        List<PhotoVO> list = photoManagementMapper.findByCondition(queryDTO);
-        return new PageResult<>(list, total, queryDTO.getPageNum(), queryDTO.getPageSize());
+    public List<PhotoVO> getImageList(PhotoQueryDTO queryDTO) {
+        return photoManagementMapper.findByCondition(queryDTO);
     }
 
-    @Override
+    /**
+     * 更新图片
+     * @param id
+     * @return
+     */
     public PhotoVO getImageById(Integer id) {
         return photoManagementMapper.findById(id);
     }
 
-    @Override
+    /**
+     * 更新图片
+     * @param id
+     * @param dto
+     * @return
+     */
     public PhotoVO updateImage(Integer id, PhotoUpdateDTO dto) {
         PhotoVO existing = photoManagementMapper.findById(id);
         if (existing == null) {
@@ -59,7 +64,10 @@ public class ImageServiceImpl implements ImageService {
         return photoManagementMapper.findById(id);
     }
 
-    @Override
+    /**
+     * 删除图片
+     * @param id
+     */
     public void deleteImage(Integer id) {
         PhotoVO existing = photoManagementMapper.findById(id);
         if (existing == null) {
@@ -68,7 +76,11 @@ public class ImageServiceImpl implements ImageService {
         photoManagementMapper.deleteById(id);
     }
 
-    @Override
+    /**
+     * 按分类获取图片
+     * @param categoryName
+     * @return
+     */
     public List<PhotoVO> getImagesByCategory(String categoryName) {
         return photoManagementMapper.findByCategory(categoryName);
     }

@@ -8,6 +8,6 @@ import lombok.Data;
 @Data
 public class CategoryCreateDTO {
 
-    /** 分类名称（2-20个字符） */
+    /** 分类名称 */
     private String name;
 }

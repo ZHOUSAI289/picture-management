@@ -35,7 +35,12 @@ public class UploadServiceImpl implements UploadService {
     @Autowired
     private CategoryMapper categoryMapper;
 
-    @Override
+    /**
+     * 上传图片
+     * @param uploadDTO
+     * @param imageFile
+     * @return
+     */
     public PhotoVO uploadImage(PhotoUploadDTO uploadDTO, MultipartFile imageFile) {
         log.info("上传图片 - title: {}, category: {}, photographer: {}",
                 uploadDTO.getTitle(), uploadDTO.getCategory(), uploadDTO.getPhotographer());
@@ -103,7 +108,11 @@ public class UploadServiceImpl implements UploadService {
         return convertToVO(image);
     }
 
-    @Override
+    /**
+     * 保存草稿
+     * @param dto
+     * @return
+     */
     public PhotoVO saveDraft(PhotoUploadDTO dto) {
         log.info("保存草稿 - title: {}", dto.getTitle());
         // 先删除旧草稿
@@ -130,17 +139,26 @@ public class UploadServiceImpl implements UploadService {
         return convertToVO(image);
     }
 
-    @Override
+    /**
+     * 获取草稿
+     * @return
+     */
     public PhotoVO getDraft() {
         return photoManagementMapper.findDraft();
     }
 
-    @Override
+    /**
+     * 删除草稿
+     */
     public void deleteDraft() {
         photoManagementMapper.deleteDrafts();
     }
 
-    @Override
+    /**
+     * 文件上传
+     * @param file
+     * @return
+     */
     public String uploadFile(MultipartFile file) {
         log.info("文件上传：{}", file.getOriginalFilename());
         try {
@@ -154,6 +172,11 @@ public class UploadServiceImpl implements UploadService {
         }
     }
 
+    /**
+     * 解析日期
+     * @param dateStr
+     * @return
+     */
     private LocalDate parseDate(String dateStr) {
         if (dateStr == null || dateStr.isEmpty()) {
             return null;
@@ -178,6 +201,11 @@ public class UploadServiceImpl implements UploadService {
         throw new RuntimeException("日期格式不正确，请使用 yyyy-MM-dd 或 yyyy/MM/dd 格式");
     }
 
+    /**
+     * 转换为VO
+     * @param image
+     * @return
+     */
     private PhotoVO convertToVO(image image) {
         PhotoVO vo = new PhotoVO();
         vo.setId(image.getId());
@@ -193,6 +221,11 @@ public class UploadServiceImpl implements UploadService {
         return vo;
     }
 
+    /**
+     * 状态转换为字符串
+     * @param status
+     * @return
+     */
     private String convertStatusToString(Integer status) {
         if (status == null) return "pending";
         switch (status) {

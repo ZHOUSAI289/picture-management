@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 public class PhotoUpdateDTO {
-    //图片id（必填，用于定位要更新的图片）
+    //图片id
     private Integer id;
     //图片标题
     private String title;

@@ -3,7 +3,6 @@ package com.gzlg.service.impl;
 import com.gzlg.mapper.CategoryMapper;
 import com.gzlg.mapper.PhotoManagementMapper;
 import com.gzlg.pojo.dto.PhotoQueryDTO;
-import com.gzlg.pojo.vo.PageResult;
 import com.gzlg.pojo.vo.PhotoVO;
 import com.gzlg.service.AuditService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,19 +24,22 @@ public class AuditServiceImpl implements AuditService {
     @Autowired
     private CategoryMapper categoryMapper;
 
-    @Override
-    public PageResult<PhotoVO> getAuditList(Integer page, Integer pageSize, Integer status) {
+    /**
+     * 获取待审核列表
+     * @return
+     */
+    public List<PhotoVO> getAuditList() {
         PhotoQueryDTO queryDTO = new PhotoQueryDTO();
-        queryDTO.setPageNum(page != null ? page : 1);
-        queryDTO.setPageSize(pageSize != null ? pageSize : 10);
-        queryDTO.setStatus(status != null ? status : 0);
-        queryDTO.calculateOffset();
-        Long total = (long) photoManagementMapper.countByCondition(queryDTO);
-        List<PhotoVO> list = photoManagementMapper.findByCondition(queryDTO);
-        return new PageResult<>(list, total, queryDTO.getPageNum(), queryDTO.getPageSize());
+        queryDTO.setStatusStr("pending");
+        return photoManagementMapper.findByCondition(queryDTO);
     }
 
-    @Override
+    /**
+     * 审核单张图片
+     * @param id
+     * @param status
+     * @return
+     */
     public PhotoVO auditImage(Integer id, String status) {
         PhotoVO existing = photoManagementMapper.findById(id);
         if (existing == null) {
@@ -48,17 +50,30 @@ public class AuditServiceImpl implements AuditService {
         return photoManagementMapper.findById(id);
     }
 
-    @Override
+    /**
+     * 批量审核图片
+     * @param ids
+     * @param status
+     */
     public void batchAuditImages(List<Integer> ids, String status) {
         Integer statusCode = convertStatusToCode(status);
         photoManagementMapper.batchUpdateStatus(ids, statusCode);
     }
 
-    @Override
+    /**
+     * 批量分类图片
+     * @param ids
+     * @param category
+     */
     public void batchUpdateCategory(List<Integer> ids, String category) {
         categoryMapper.batchUpdateCategory(ids, category);
     }
 
+    /**
+     * 状态值转换成代码
+     * @param status
+     * @return
+     */
     private Integer convertStatusToCode(String status) {
         switch (status.toLowerCase()) {
             case "approved": return 1;

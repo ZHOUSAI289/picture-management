@@ -47,9 +47,6 @@
             <if test="endDate != null and endDate != ''">
                 AND date &lt;= #{endDate}
             </if>
-            <if test="status != null">
-                AND status = #{status}
-            </if>
             <if test="statusStr != null and statusStr != ''">
                 AND CASE status
                     WHEN 0 THEN 'pending'
@@ -77,9 +74,6 @@
                 ORDER BY created_at DESC
             </otherwise>
         </choose>
-        <if test="pageNum != null and pageSize != null">
-            LIMIT #{offset}, #{pageSize}
-        </if>
     </select>
 
     <select id="countByCondition" parameterType="com.gzlg.pojo.dto.PhotoQueryDTO" resultType="int">
@@ -96,9 +90,6 @@
             </if>
             <if test="endDate != null and endDate != ''">
                 AND date &lt;= #{endDate}
-            </if>
-            <if test="status != null">
-                AND status = #{status}
             </if>
             <if test="statusStr != null and statusStr != ''">
                 AND CASE status
@@ -131,11 +122,13 @@
         ORDER BY created_at DESC
     </select>
 
+    <!-- 插入图片信息 -->
     <insert id="insert" parameterType="com.gzlg.pojo.entity.image" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO image (title, category, photographer, date, url, description, status, created_at, updated_at)
         VALUES (#{title}, #{category}, #{photographer}, #{date}, #{url}, #{description}, #{status}, #{createdAt}, #{updatedAt})
     </insert>
 
+    <!-- 更新图片信息 -->
     <update id="update" parameterType="com.gzlg.pojo.entity.image">
         UPDATE image
         <set>

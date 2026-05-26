@@ -22,13 +22,6 @@ public interface PhotoManagementMapper {
     List<PhotoVO> findByCondition(PhotoQueryDTO queryDTO);
 
     /**
-     * 查询图片总数（用于分页）
-     * @param queryDTO 查询条件
-     * @return 图片总数
-     */
-    int countByCondition(PhotoQueryDTO queryDTO);
-
-    /**
      * 根据ID查询单个图片
      * @param id 图片ID
      * @return 图片详情
@@ -66,7 +59,7 @@ public interface PhotoManagementMapper {
     void updateStatus(@Param("id") Integer id, @Param("status") Integer status);
 
     /**
-     * 批量更新图片状态
+     * 批量更新图片状态(用于批量审核)
      */
     void batchUpdateStatus(@Param("ids") List<Integer> ids, @Param("status") Integer status);
 

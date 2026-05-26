@@ -20,13 +20,20 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
-    @Override
+    /**
+     * 获取所有分类列表
+     * @return
+     */
     public List<Category> getAllCategories() {
         log.info("获取所有分类列表");
         return categoryMapper.findAllWithCount();
     }
 
-    @Override
+    /**
+     * 根据ID获取分类
+     * @param id
+     * @return
+     */
     public Category getCategoryById(Integer id) {
         log.info("根据ID获取分类: {}", id);
         Category category = categoryMapper.findById(id);
@@ -37,13 +44,18 @@ public class CategoryServiceImpl implements CategoryService {
         return category;
     }
 
-    @Override
+    /**
+     * 添加新分类
+     * @param categoryName
+     * @return
+     */
     public Category addCategory(String categoryName) {
         log.info("添加新分类: {}", categoryName);
         Category existing = categoryMapper.findByName(categoryName);
         if (existing != null) {
             throw new RuntimeException("分类已存在");
         }
+
         Category category = new Category();
         category.setName(categoryName);
         category.setCreatedAt(LocalDateTime.now());
@@ -53,7 +65,10 @@ public class CategoryServiceImpl implements CategoryService {
         return category;
     }
 
-    @Override
+    /**
+     * 删除分类
+     * @param id
+     */
     public void deleteCategory(Integer id) {
         log.info("删除分类，ID: {}", id);
         Category category = categoryMapper.findById(id);
@@ -64,7 +79,11 @@ public class CategoryServiceImpl implements CategoryService {
         log.info("分类删除成功");
     }
 
-    @Override
+    /**
+     * 批量更新图片分类
+     * @param ids
+     * @param category
+     */
     public void batchUpdateCategory(List<Integer> ids, String category) {
         log.info("批量更新图片分类，图片数: {}, 分类: {}", ids.size(), category);
         categoryMapper.batchUpdateCategory(ids, category);

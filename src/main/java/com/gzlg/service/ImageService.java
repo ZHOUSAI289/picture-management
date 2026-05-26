@@ -2,7 +2,6 @@ package com.gzlg.service;
 
 import com.gzlg.pojo.dto.PhotoQueryDTO;
 import com.gzlg.pojo.dto.PhotoUpdateDTO;
-import com.gzlg.pojo.vo.PageResult;
 import com.gzlg.pojo.vo.PhotoVO;
 
 import java.util.List;
@@ -13,9 +12,9 @@ import java.util.List;
 public interface ImageService {
 
     /**
-     * 获取图片列表（分页、搜索、筛选）
+     * 获取图片列表
      */
-    PageResult<PhotoVO> getImageList(PhotoQueryDTO queryDTO);
+    List<PhotoVO> getImageList(PhotoQueryDTO queryDTO);
 
     /**
      * 根据ID获取图片详情
