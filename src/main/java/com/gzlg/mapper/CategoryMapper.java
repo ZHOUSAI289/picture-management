@@ -1,6 +1,7 @@
 package com.gzlg.mapper;
 
 import com.gzlg.pojo.entity.Category;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -42,6 +43,7 @@ public interface CategoryMapper {
      * 根据ID删除分类
      * @param id 分类ID
      */
+    @Delete("DELETE FROM category WHERE id = #{id}")
     void deleteById(Integer id);
 
     /**

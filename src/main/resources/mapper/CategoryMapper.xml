@@ -38,11 +38,6 @@
         VALUES (#{name}, #{createdAt})
     </insert>
 
-    <!-- 根据ID删除分类 -->
-    <delete id="deleteById" parameterType="int">
-        DELETE FROM category WHERE id = #{id}
-    </delete>
-
     <!-- 统计某分类下的图片数量 -->
     <select id="countImagesByCategory" parameterType="string" resultType="int">
         SELECT COUNT(*)

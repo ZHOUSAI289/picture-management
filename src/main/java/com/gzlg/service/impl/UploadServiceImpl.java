@@ -162,9 +162,9 @@ public class UploadServiceImpl implements UploadService {
     public String uploadFile(MultipartFile file) {
         log.info("文件上传：{}", file.getOriginalFilename());
         try {
-            String originalFilename = file.getOriginalFilename();
-            String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-            String objectName = UUID.randomUUID().toString() + extension;
+            String originalFilename = file.getOriginalFilename(); // 获取原始文件名
+            String extension = originalFilename.substring(originalFilename.lastIndexOf(".")); // 获取文件扩展名
+            String objectName = UUID.randomUUID().toString() + extension; // 生成随机文件名
             return aliOssUtil.upload(file.getBytes(), objectName);
         } catch (Exception e) {
             log.error("文件上传失败", e);
