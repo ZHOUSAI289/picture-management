@@ -56,12 +56,12 @@ public class ImageServiceImpl implements ImageService {
 
         image image = new image();
         image.setId(id);
-        if (dto.getTitle() != null) image.setTitle(dto.getTitle());
-        if (dto.getCategory() != null) image.setCategory(dto.getCategory());
-        if (dto.getPhotographer() != null) image.setPhotographer(dto.getPhotographer());
-        if (dto.getDate() != null) image.setDate(LocalDate.parse(dto.getDate()));
-        if (dto.getDescription() != null) image.setDescription(dto.getDescription());
-        if (dto.getStatus() != null) image.setStatus(dto.getStatus());
+        image.setTitle(dto.getTitle());
+        image.setCategory(dto.getCategory());
+        image.setPhotographer(dto.getPhotographer());
+        image.setDate(LocalDate.parse(dto.getDate()));
+        image.setDescription(dto.getDescription());
+        image.setStatus(dto.getStatus());
         image.setUpdatedAt(LocalDateTime.now());
 
         photoManagementMapper.update(image);
