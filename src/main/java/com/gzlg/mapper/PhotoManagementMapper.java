@@ -45,7 +45,7 @@ public interface PhotoManagementMapper {
      * 根据ID删除图片
      * @param id 图片ID
      */
-    @Delete("delete from photo where id = #{id}")
+    @Delete("delete from image where id = #{id}")
     void deleteById(Integer id);
 
     /**

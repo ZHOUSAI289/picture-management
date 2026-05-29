@@ -15,11 +15,6 @@ public interface UploadService {
     PhotoVO uploadImage(PhotoUploadDTO uploadDTO, MultipartFile imageFile);
 
     /**
-     * 通用文件上传（仅上传OSS，返回URL）
-     */
-    String uploadFile(MultipartFile file);
-
-    /**
      * 保存草稿（status='draft'）
      */
     PhotoVO saveDraft(PhotoUploadDTO dto);

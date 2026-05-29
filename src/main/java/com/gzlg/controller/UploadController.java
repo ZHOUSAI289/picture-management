@@ -35,17 +35,6 @@ public class UploadController {
     }
 
     /**
-     * 文件上传
-     * @param file
-     * @return
-     */
-    @PostMapping("/upload/file")
-    public Result<String> uploadFile(@RequestParam("file") MultipartFile file) {
-        String url = uploadService.uploadFile(file);
-        return Result.success(url);
-    }
-
-    /**
      * 保存草稿
      * @param photoUploadDTO
      * @return
