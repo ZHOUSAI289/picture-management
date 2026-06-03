@@ -20,6 +20,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private JwtUtils jwtUtils;
 
     /**
      * 登录
@@ -33,7 +35,7 @@ public class UserServiceImpl implements UserService {
             Map<String, Object> claims = new HashMap<>();
             claims.put("jobNumber", lo.getJobNumber());
             claims.put("role", role);
-            String jwt = JwtUtils.generateJwt(claims);
+            String jwt = jwtUtils.generateJwt(claims);
             return new User(user.getId(), user.getName(), user.getJobNumber(),
                     user.getPassword(), user.getCreateTime(), jwt);
         }

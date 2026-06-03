@@ -6,6 +6,7 @@ import com.gzlg.pojo.dto.RegisterDTO;
 import com.gzlg.pojo.entity.User;
 import com.gzlg.pojo.vo.LoginVO;
 import com.gzlg.service.UserService;
+import com.gzlg.util.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
 
     @Autowired
-    private UserService loginService;
+    private UserService userService;
 
     /**
      * 登录
@@ -25,7 +26,7 @@ public class LoginController {
     @PostMapping("/login")
     public Result<LoginVO> login(@RequestBody LoginDTO lo) {
         log.info("登录: jobNumber={}", lo.getJobNumber());
-        User user = loginService.login(lo);
+        User user = userService.login(lo);
         LoginVO loginVO = new LoginVO();
 
         if (user != null) {
@@ -43,7 +44,7 @@ public class LoginController {
     @PostMapping("/register")
     public Result register(@RequestBody RegisterDTO dto) {
         log.info("注册: name={}, jobNumber={}", dto.getName(), dto.getJobNumber());
-        loginService.register(dto);
+        userService.register(dto);
         return Result.success();
     }
 }
