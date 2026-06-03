@@ -23,6 +23,6 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(tokenInterceptor)
                 .addPathPatterns("/api/**")//拦截所有API请求
-                .excludePathPatterns("/api/login");//登录接口放行
+                .excludePathPatterns("/api/login", "/api/register");//登录和注册放行
     }
 }

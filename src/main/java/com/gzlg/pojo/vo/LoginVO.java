@@ -11,4 +11,5 @@ public class LoginVO {
     private Integer jobNumber;
     private String name;
     private String token;
+    private String role; // 角色：admin/user
 }

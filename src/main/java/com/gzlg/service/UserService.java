@@ -1,6 +1,7 @@
 package com.gzlg.service;
 
 import com.gzlg.pojo.dto.LoginDTO;
+import com.gzlg.pojo.dto.RegisterDTO;
 import com.gzlg.pojo.entity.User;
 import com.gzlg.pojo.vo.LoginVO;
 import org.slf4j.Logger;
@@ -12,4 +13,10 @@ public interface UserService {
      * @return
      */
     User login(LoginDTO lo);
+
+    /**
+     *  注册
+     * @param dto
+     */
+    void register(RegisterDTO dto);
 }
