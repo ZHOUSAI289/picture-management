@@ -22,6 +22,9 @@ public class image {
     // 拍摄者
     private String photographer;
 
+    // 人物姓名
+    private String personName;
+
     // 拍摄日期
     private LocalDate date;
 

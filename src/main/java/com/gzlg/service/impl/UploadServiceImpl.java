@@ -95,6 +95,7 @@ public class UploadServiceImpl implements UploadService {
         image.setTitle(uploadDTO.getTitle());
         image.setCategory(category);
         image.setPhotographer(uploadDTO.getPhotographer());
+        image.setPersonName(uploadDTO.getPersonName());
         image.setDate(date);
         image.setUrl(url);
         image.setDescription(uploadDTO.getDescription());
@@ -194,6 +195,7 @@ public class UploadServiceImpl implements UploadService {
         vo.setTitle(image.getTitle());
         vo.setCategory(image.getCategory());
         vo.setPhotographer(image.getPhotographer());
+        vo.setPersonName(image.getPersonName());
         vo.setDate(image.getDate() != null ? image.getDate().toString() : null);
         vo.setUrl(image.getUrl());
         vo.setDescription(image.getDescription());

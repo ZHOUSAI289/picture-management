@@ -9,6 +9,7 @@
         <result property="title" column="title"/>
         <result property="category" column="category"/>
         <result property="photographer" column="photographer"/>
+        <result property="personName" column="person_name"/>
         <result property="date" column="date"/>
         <result property="url" column="url"/>
         <result property="description" column="description"/>
@@ -19,7 +20,7 @@
     
     <select id="findByCondition" parameterType="com.gzlg.pojo.dto.PhotoQueryDTO" resultMap="imageMap">
         SELECT
-            id, title, category, photographer, date, url, description, status,
+            id, title, category, photographer, person_name, date, url, description, status,
             created_at, updated_at
         FROM image
         <where>
@@ -81,7 +82,7 @@
 
     <select id="findById" parameterType="int" resultMap="imageMap">
         SELECT
-            id, title, category, photographer, date, url, description, status,
+            id, title, category, photographer, person_name, date, url, description, status,
             created_at, updated_at
         FROM image WHERE id = #{id}
     </select>
@@ -89,7 +90,7 @@
     <!-- 根据分类名称查询图片列表 -->
     <select id="findByCategory" parameterType="string" resultMap="imageMap">
         SELECT
-            id, title, category, photographer, date, url, description, status,
+            id, title, category, photographer, person_name, date, url, description, status,
             created_at, updated_at
         FROM image 
         WHERE category = #{categoryName}
@@ -98,8 +99,8 @@
 
     <!-- 插入图片信息 -->
     <insert id="insert" parameterType="com.gzlg.pojo.entity.image" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO image (title, category, photographer, date, url, description, status, created_at, updated_at)
-        VALUES (#{title}, #{category}, #{photographer}, #{date}, #{url}, #{description}, #{status}, #{createdAt}, #{updatedAt})
+        INSERT INTO image (title, category, photographer, person_name, date, url, description, status, created_at, updated_at)
+        VALUES (#{title}, #{category}, #{photographer}, #{personName}, #{date}, #{url}, #{description}, #{status}, #{createdAt}, #{updatedAt})
     </insert>
 
     <!-- 更新图片信息 -->
@@ -109,6 +110,7 @@
             <if test="title != null">title = #{title},</if>
             <if test="category != null">category = #{category},</if>
             <if test="photographer != null">photographer = #{photographer},</if>
+            <if test="personName != null">person_name = #{personName},</if>
             <if test="date != null">date = #{date},</if>
             <if test="url != null">url = #{url},</if>
             <if test="description != null">description = #{description},</if>
@@ -129,7 +131,7 @@
     <!-- 查询草稿 -->
     <select id="findDraft" resultMap="imageMap">
         SELECT
-            id, title, category, photographer, date, url, description, status,
+            id, title, category, photographer, person_name, date, url, description, status,
             created_at, updated_at
         FROM image
         WHERE status = 'draft'

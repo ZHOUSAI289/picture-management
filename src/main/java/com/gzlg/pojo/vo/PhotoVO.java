@@ -24,6 +24,8 @@ public class PhotoVO {
     private String date;
     //图片路径（阿里云OSS地址）
     private String url;
+    //人物姓名
+    private String personName;
     //图片简介
     private String description;
     //状态（pending-待审核，approved-审核通过，rejected-审核拒绝，published-已发布）

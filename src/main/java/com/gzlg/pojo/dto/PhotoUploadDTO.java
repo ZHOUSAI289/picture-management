@@ -20,6 +20,9 @@ public class PhotoUploadDTO {
     /** 拍摄者（必填） */
     private String photographer;
 
+    /** 人物姓名 */
+    private String personName;
+
     /** 拍摄日期，格式：YYYY-MM-DD（必填） */
     private String date;
 

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * 图片管理服务实现
+ * 图片管理服务实现(首页)
  */
 @Service
 @Slf4j

@@ -6,7 +6,6 @@ import com.gzlg.pojo.dto.RegisterDTO;
 import com.gzlg.pojo.entity.User;
 import com.gzlg.pojo.vo.LoginVO;
 import com.gzlg.service.UserService;
-import com.gzlg.util.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
