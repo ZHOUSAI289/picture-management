@@ -1,6 +1,7 @@
 package com.gzlg.service.impl;
 
 import com.gzlg.mapper.CategoryMapper;
+import com.gzlg.mapper.DraftMapper;
 import com.gzlg.mapper.PhotoManagementMapper;
 import com.gzlg.pojo.dto.PhotoUploadDTO;
 import com.gzlg.pojo.entity.Category;
@@ -31,9 +32,10 @@ public class UploadServiceImpl implements UploadService {
 
     @Autowired
     private PhotoManagementMapper photoManagementMapper;
-
     @Autowired
     private CategoryMapper categoryMapper;
+    @Autowired
+    private DraftMapper draftMapper;
 
     /**
      * 上传图片
@@ -117,7 +119,7 @@ public class UploadServiceImpl implements UploadService {
     public PhotoVO saveDraft(PhotoUploadDTO dto) {
         log.info("保存草稿 - title: {}", dto.getTitle());
         // 先删除旧草稿
-        photoManagementMapper.deleteDrafts();
+        draftMapper.deleteDrafts();
 
         LocalDate date = null;
         if (dto.getDate() != null && !dto.getDate().isEmpty()) {
@@ -145,14 +147,14 @@ public class UploadServiceImpl implements UploadService {
      * @return
      */
     public PhotoVO getDraft() {
-        return photoManagementMapper.findDraft();
+        return draftMapper.findDraft();
     }
 
     /**
      * 删除草稿
      */
     public void deleteDraft() {
-        photoManagementMapper.deleteDrafts();
+        draftMapper.deleteDrafts();
     }
 
     /**

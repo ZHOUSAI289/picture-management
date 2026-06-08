@@ -128,19 +128,6 @@
         WHERE id = #{id}
     </update>
 
-    <!-- 查询草稿 -->
-    <select id="findDraft" resultMap="imageMap">
-        SELECT
-            id, title, category, photographer, person_name, date, url, description, status,
-            created_at, updated_at
-        FROM image
-        WHERE status = 'draft'
-        ORDER BY updated_at DESC
-        LIMIT 1
-    </select>
-
-
-
     <!-- 批量更新图片状态 -->
     <update id="batchUpdateStatus">
         UPDATE image
